@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, UserCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "../app/api/userApiSlice";
+import { useDispatch } from "react-redux";
+import { login } from "../app/slices/userSlice";
+
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -12,6 +16,8 @@ export default function LoginPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [loginUser, {isLoading}] = useLoginUserMutation();
+  const dispatch = useDispatch();
 
   // Handle input change
   const handleChange = (e) => {
@@ -28,30 +34,10 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const response = await fetch(
-        "https://medimin-backend.vercel.app/users/login/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        // Save token in localStorage
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("role", data.user.role);
-
-        // Redirect based on role
-        if (data.user.role === "pharmacy") navigate("/company-dashboard");
-        else if (data.user.role === "supplier") navigate("/supplier-dashboard");
-        else navigate("/");
-      } else {
-        setError(data.message || "Invalid email or password");
+      const response = await loginUser(formData).unwrap();
+      if (response) {
+        dispatch(login(response));
+        navigate("/dashboard");
       }
     } catch (err) {
       setError("Network error. Please try again later.");
