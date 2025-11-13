@@ -2,7 +2,7 @@ import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react'
 import {login, logout, removeToken} from '../slices/userSlice'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://127.0.0.1:8000/',
+    baseUrl: 'https://medimind-backend-ten.vercel.app/',
     credentials: 'include',
     prepareHeaders: (Headers, { getState }) => {
         const token = getState().user.token;
