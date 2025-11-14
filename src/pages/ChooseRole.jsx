@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, UserCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useLoginUserMutation } from "../app/api/userApiSlice";
+import { useLoginMutation } from "../app/api/userApiSlice";
 import { useDispatch } from "react-redux";
 import { login } from "../app/slices/userSlice";
 
@@ -16,7 +16,7 @@ export default function LoginPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [loginUser, {isLoading}] = useLoginUserMutation();
+  const [loginUser, {isLoading}] = useLoginMutation();
   const dispatch = useDispatch();
 
   // Handle input change
