@@ -47,11 +47,59 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex items-center justify-center relative overflow-hidden">
-      {/* Background Glow */}
+    <div className="page-container flex items-center justify-center relative overflow-hidden">
+      {/* Enhanced Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-secondary/20 rounded-full blur-3xl animate-pulse"></div>
+        <motion.div
+          className="absolute top-20 left-10 w-96 h-96 bg-blue-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, 80, 0],
+            y: [0, 50, 0],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-88 h-88 bg-purple-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, -70, 0],
+            y: [0, -40, 0],
+            scale: [1, 1.4, 1],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-64 h-64 bg-green-400/10 rounded-full blur-3xl"
+          animate={{
+            rotate: 360,
+            scale: [1, 1.5, 1],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/4 right-1/4 w-48 h-48 bg-cyan-400/8 rounded-full blur-2xl"
+          animate={{
+            rotate: -360,
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
       </div>
 
       {/* Card */}
@@ -83,7 +131,7 @@ export default function LoginPage() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full p-3 pl-10 border border-border bg-input rounded-md focus:ring-2 focus:ring-primary/60 outline-none transition"
+                className="input-field pl-10"
                 placeholder="you@example.com"
               />
             </div>
@@ -103,7 +151,7 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full p-3 pl-10 border border-border bg-input rounded-md focus:ring-2 focus:ring-primary/60 outline-none transition"
+                className="input-field pl-10"
                 placeholder="••••••••"
               />
             </div>
@@ -123,11 +171,11 @@ export default function LoginPage() {
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className="w-full p-3 pl-10 border border-border bg-input rounded-md focus:ring-2 focus:ring-primary/60 outline-none transition"
+                className="input-field pl-10"
               >
                 <option value="pharmacy">Pharmacy</option>
                 <option value="supplier">Supplier</option>
-              </select>
+              </select> 
             </div>
           </div>
 
@@ -140,7 +188,7 @@ export default function LoginPage() {
             whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-primary text-white rounded-md text-lg font-medium hover:bg-primary/80 transition shadow-lg shadow-primary/20 disabled:opacity-70"
+            className="btn-primary w-full"
           >
             {loading ? "Logging in..." : "Login"}
           </motion.button>

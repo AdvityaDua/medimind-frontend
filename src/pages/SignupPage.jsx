@@ -4,11 +4,59 @@ import { Mail, Lock, User, Building2 } from "lucide-react";
 
 export default function SignupPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex items-center justify-center relative overflow-hidden">
-      {/* Background Glow Effects */}
+    <div className="page-container flex items-center justify-center relative overflow-hidden">
+      {/* Enhanced Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-secondary/20 rounded-full blur-3xl animate-pulse"></div>
+        <motion.div
+          className="absolute top-20 left-10 w-96 h-96 bg-blue-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, 70, 0],
+            y: [0, 50, 0],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 19,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-88 h-88 bg-purple-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, -60, 0],
+            y: [0, -45, 0],
+            scale: [1, 1.4, 1],
+          }}
+          transition={{
+            duration: 17,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-64 h-64 bg-green-400/10 rounded-full blur-3xl"
+          animate={{
+            rotate: 360,
+            scale: [1, 1.5, 1],
+          }}
+          transition={{
+            duration: 24,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/3 right-1/3 w-56 h-56 bg-cyan-400/8 rounded-full blur-2xl"
+          animate={{
+            rotate: -360,
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 32,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
       </div>
 
       {/* Card */}
@@ -38,7 +86,7 @@ export default function SignupPage() {
               />
               <input
                 type="text"
-                className="w-full p-3 pl-10 border border-border bg-input rounded-md focus:ring-2 focus:ring-primary/60 outline-none transition"
+                className="input-field pl-10"
                 placeholder="John Doe"
                 required
               />
@@ -55,7 +103,7 @@ export default function SignupPage() {
               />
               <input
                 type="email"
-                className="w-full p-3 pl-10 border border-border bg-input rounded-md focus:ring-2 focus:ring-primary/60 outline-none transition"
+                className="input-field pl-10"
                 placeholder="you@example.com"
                 required
               />
@@ -72,7 +120,7 @@ export default function SignupPage() {
               />
               <input
                 type="password"
-                className="w-full p-3 pl-10 border border-border bg-input rounded-md focus:ring-2 focus:ring-primary/60 outline-none transition"
+                className="input-field pl-10"
                 placeholder="••••••••"
                 required
               />
@@ -91,7 +139,7 @@ export default function SignupPage() {
               />
               <input
                 type="password"
-                className="w-full p-3 pl-10 border border-border bg-input rounded-md focus:ring-2 focus:ring-primary/60 outline-none transition"
+                className="input-field pl-10"
                 placeholder="••••••••"
                 required
               />
@@ -118,7 +166,7 @@ export default function SignupPage() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            className="w-full py-3 bg-primary text-white rounded-md text-lg font-medium hover:bg-primary/80 transition shadow-lg shadow-primary/20"
+            className="btn-primary w-full"
           >
             Sign Up
           </motion.button>

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import CompanyDashboard from "./pages/CompanyDashboard";
+import SupplierDashboard from "./pages/SupplierDashboard";
 import LandingPage from "./pages/LandingPage";
 import AboutPage from "./pages/about";
 import ContactPage from "./pages/contact";
@@ -15,7 +16,10 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<LoginPage />} /> {/* NEW */}
+        <Route path="/company"element={<CompanyDashboard />} />
+        <Route path="/supplier" element={<SupplierDashboard />} />
         <Route path="/signup" element={<SignupPage />} />
+
       </Routes>
     </BrowserRouter>
   );
