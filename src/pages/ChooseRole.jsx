@@ -1,0 +1,211 @@
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, Lock, UserCircle } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../app/api/userApiSlice";
+import { useDispatch } from "react-redux";
+import { login } from "../app/slices/userSlice";
+import { selectUser } from "../app/slices/userSlice";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
+
+export default function LoginPage() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [loginUser, {isLoading}] = useLoginMutation();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  
+
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await loginUser(formData).unwrap();
+      if (response) {
+        dispatch(login(response));
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      setError("Network error. Please try again later.");
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <div className="page-container flex items-center justify-center relative overflow-hidden">
+      {/* Enhanced Animated Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div
+          className="absolute top-20 left-10 w-96 h-96 bg-blue-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, 80, 0],
+            y: [0, 50, 0],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-88 h-88 bg-purple-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, -70, 0],
+            y: [0, -40, 0],
+            scale: [1, 1.4, 1],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-64 h-64 bg-green-400/10 rounded-full blur-3xl"
+          animate={{
+            rotate: 360,
+            scale: [1, 1.5, 1],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/4 right-1/4 w-48 h-48 bg-cyan-400/8 rounded-full blur-2xl"
+          animate={{
+            rotate: -360,
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
+
+      {/* Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-md bg-card/70 backdrop-blur-xl border border-border/80 rounded-2xl shadow-xl p-10 relative z-10"
+      >
+        <h2 className="text-4xl font-bold text-center mb-2">
+          <span className="text-primary">Welcome Back</span>
+        </h2>
+        <p className="text-center text-foreground/70 mb-8">
+          Login to access your MediMind dashboard
+        </p>
+
+        <form onSubmit={handleSubmit} className="grid gap-6">
+          {/* Email */}
+          <div>
+            <label className="block mb-1 text-sm font-medium">Email</label>
+            <div className="relative">
+              <Mail
+                className="absolute left-3 top-3 text-foreground/50"
+                size={20}
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="input-field pl-10"
+                placeholder="you@example.com"
+              />
+            </div>
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block mb-1 text-sm font-medium">Password</label>
+            <div className="relative">
+              <Lock
+                className="absolute left-3 top-3 text-foreground/50"
+                size={20}
+              />
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="input-field pl-10"
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+
+          {/* Error */}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+          {/* Button */}
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            type="submit"
+            disabled={loading}
+            className="btn-primary w-full"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </motion.button>
+        </form>
+
+        {/* Divider */}
+        <div className="flex items-center my-6">
+          <span className="flex-1 border-t border-border"></span>
+          <span className="px-3 text-foreground/60 text-sm">or</span>
+          <span className="flex-1 border-t border-border"></span>
+        </div>
+
+        {/* Sign Up Redirect */}
+        <p className="text-center text-sm text-foreground/80">
+          Don’t have an account?{" "}
+          <Link
+            to="/signup"
+            className="text-primary font-medium hover:underline"
+          >
+            Create one
+          </Link>
+        </p>
+
+        {/* Back to Home */}
+        <p className="text-center mt-4 text-sm">
+          <Link to="/" className="text-primary hover:underline">
+            ← Back to Home
+          </Link>
+        </p>
+      </motion.div>
+    </div>
+  );
+}
